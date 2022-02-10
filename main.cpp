@@ -1,12 +1,7 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
-
-typedef struct result
-{
-    int index;
-    int size;
-} result;
 
 class Solution
 {
@@ -14,16 +9,6 @@ public:
     bool witness = false;
 
 public:
-    string ReturnString(string s, result res)
-    {
-        string g = "";
-        for (int i = res.index; i <= res.size; i++)
-        {
-            g += s[i];
-        }
-
-        return g;
-    }
     bool isPolindrom(string s)
     {
         for (int i = 0, j = s.length() - 1; i < s.length(); i++, j--)
@@ -38,55 +23,29 @@ public:
     }
     string longestPalindrome(string s)
     {
-        result res;
-        res.size = 0;
-        res.index = 0;
-        if (s.length() <= 2)
+        vector<string> list;
+        for (int i = 1; i < s.length(); i++)
         {
-            if (isPolindrom(s) == false)
-                return s;
-            else
+            for (int j = 0; j < s.length(); j++)
             {
-                string g = "";
-                g += s[0];
-                return g;
-            }
-        }
-        else
-        {
-            for (int j = 2; j < s.length(); j++)
-            {
-                for (int i = 0; i < s.length() - j; i++)
-                {
-                    if (s[i] == s[i + j])
-                    {
-                        result res2;
-                        res2.index = i;
-                        res2.size = i + j;
-                        // "aacabdkacaa"
-                        if (isPolindrom(ReturnString(s, res2)) == false)
-                        {
-                            res.index = res2.index;
-                            res.size = res2.size;
-                        }
-                        // cout << res.index << "     --    " << res.size << endl;
-                    }
-                }
-            }
-            if (!res.size)
-            {
-                for (int i = 0; i < s.length() - 1; i++)
-                {
-                    if (s[i] == s[i + 1])
-                    {
-                        res.index = i;
-                        res.size = i + 1;
-                    }
-                }
-            }
 
-            return ReturnString(s, res);
+                list.push_back(s.substr(j, i));
+            }
         }
+        int max = list[0].length();
+        int ind = 0;
+        for (int i = 0; i < list.size(); i++)
+        {
+            if (isPolindrom(list[i]) == false)
+            {
+                if (max < list[i].length())
+                {
+                    max = list[i].length();
+                    ind = i;
+                }
+            }
+        }
+        return list[ind];
     }
 };
 
