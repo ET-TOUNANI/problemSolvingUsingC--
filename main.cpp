@@ -6,7 +6,7 @@ typedef struct result
 {
     int index;
     int size;
-};
+} result;
 
 class Solution
 {
@@ -14,6 +14,16 @@ public:
     bool witness = false;
 
 public:
+    string ReturnString(string s, result res)
+    {
+        string g = "";
+        for (int i = res.index; i <= res.size; i++)
+        {
+            g += s[i];
+        }
+
+        return g;
+    }
     bool isPolindrom(string s)
     {
         for (int i = 0, j = s.length() - 1; i < s.length(); i++, j--)
@@ -29,23 +39,53 @@ public:
     string longestPalindrome(string s)
     {
         result res;
-        if (s.length() < 3)
+        res.size = 0;
+        res.index = 0;
+        if (s.length() <= 2)
         {
-            return s;
+            if (isPolindrom(s) == false)
+                return s;
+            else
+            {
+                string g = "";
+                g += s[0];
+                return g;
+            }
         }
         else
         {
-            for (int j = 3; j < s.length(); j++)
+            for (int j = 2; j < s.length(); j++)
             {
-                for (int i = 0; i < s.length() - 2; i++)
+                for (int i = 0; i < s.length() - j; i++)
                 {
                     if (s[i] == s[i + j])
                     {
-                        res.index = i;
-                        res.size = j;
+                        result res2;
+                        res2.index = i;
+                        res2.size = i + j;
+                        // "aacabdkacaa"
+                        if (isPolindrom(ReturnString(s, res2)) == false)
+                        {
+                            res.index = res2.index;
+                            res.size = res2.size;
+                        }
+                        // cout << res.index << "     --    " << res.size << endl;
                     }
                 }
             }
+            if (!res.size)
+            {
+                for (int i = 0; i < s.length() - 1; i++)
+                {
+                    if (s[i] == s[i + 1])
+                    {
+                        res.index = i;
+                        res.size = i + 1;
+                    }
+                }
+            }
+
+            return ReturnString(s, res);
         }
     }
 };
@@ -54,11 +94,12 @@ int main()
 {
 
     Solution s1;
-    string s = "oho";
-    if (s1.isPolindrom(s) == true)
-    {
-        cout << "not palindromic " << endl;
-    }
-    else
-        cout << "palindromic " << endl;
+    string s = "aacabdkacaa";
+    string rs = s1.longestPalindrome(s);
+    // if (s1.isPolindrom(rs) == true)
+    // {
+    //     cout << "not palindromic " << endl;
+    // }
+    // else
+    cout << rs << endl;
 }
