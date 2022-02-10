@@ -26,18 +26,41 @@ public:
 
         for (int i = 0; i < nums.size(); i++)
         {
-            if (nums[i] > 0)
+            if (nums[i] >= 0)
                 continue;
             else
                 this->arrayIsNegative = true;
         }
-
         // there is a Negative value in the Array
         if (this->arrayIsNegative == true)
         {
         }
         else
         {
+            int j = 0, res = 0;
+
+        next:
+            if (FindNumbers(nums, j++) == true)
+            {
+                res = j;
+                goto next;
+            }
+
+            else
+                return res;
         }
     }
 };
+
+int main()
+{
+    vector<int> nums;
+    nums.push_back(0);
+    nums.push_back(1);
+    nums.push_back(2);
+    nums.push_back(3);
+    nums.push_back(4);
+    Solution s1;
+    cout << s1.firstMissingPositive(nums) << endl;
+    return 0;
+}
