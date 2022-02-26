@@ -9,3 +9,4 @@ You must implement an algorithm that runs in O(n) time and uses constant extra s
 ## example 2    
     Input: nums = [7,8,9,11,12]
     Output: 1
+<img src="https://github.com/ET-TOUNANI/problemSolvingUsingC--/blob/main/S.png">
