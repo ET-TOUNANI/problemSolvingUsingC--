@@ -1,4 +1,6 @@
 #include<iostream>
+#include<fstream>
+#include<string>
 using namespace std;
 
 class Calc
@@ -25,5 +27,17 @@ class Calc
 
 int main()
 {
-
+    string calc="";
+    ifstream calcFile;
+    calcFile.open("calc.txt");
+    // fstream vache("clevache.txt");
+    // fstream terrain("terrain.txt");
+    while (!calcFile.eof())
+    {
+        getline(calcFile,calc);
+        cout << calc << endl;
+    }
+    calcFile.close();
+    
+    return 0;
 }
